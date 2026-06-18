@@ -4,8 +4,10 @@
 
 ### Prompt: Project-wide architecture decision
 
+Exploration first
+
 ```
-Given these specifications and constraints (Vite, React, anime.js, vanilla CSS,
+Given the specifications in PROJECT_SPECS.md and constraints (Vite, React, anime.js, vanilla CSS,
 no state management), explore 2-3 architectural approaches for:
 
 - Scroll animation management across all sections
@@ -13,7 +15,11 @@ no state management), explore 2-3 architectural approaches for:
 - CSS organization strategy
 
 Show trade-offs in terms of maintainability, performance, and code reusability.
+```
 
+Generate report
+
+```
 Based on the exploration above, create an ARCHITECTURE.md document
 that documents our decisions. Use this format:
 
@@ -42,7 +48,7 @@ explore implementation options for [Header/HeroSection/Testimonials Carousel].
 What are the key architectural decisions specific to this component?
 ```
 
-Document if needed
+Generate report if needed
 
 ```
 This component has a unique architectural need: [describe it]

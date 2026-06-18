@@ -1,12 +1,112 @@
-# AI Guidelines for Website Development
+---
 
-## Finance App Landing Page (Revamp)
+## 6 — Animations & Interactions
 
-These guidelines ensure maintainability, performance, security, and code quality when using AI to assist development. **MUST** rules are required; **SHOULD** rules are strongly recommended; **CONSIDER** rules are situational best practices.
+- **AI-1 (MUST)** Use anime.js for consistent, performant animations across the site.
+- **AI-2 (SHOULD)** Verify all animations perform smoothly (60fps) on mobile devices.
+- **AI-3 (SHOULD)** Implement animations that enhance UX, not distract from it.
+- **AI-4 (CONSIDER)** Use CSS animations for simple transitions; reserve JavaScript animations for complex sequences.
+- **AI-5 (MUST)** Test animations with `prefers-reduced-motion` media query for accessibility compliance.
 
 ---
 
-## 1 — Before Development
+## 7 — Verification & Review
+
+This section is critical to the AI-assisted workflow. Every AI-generated code must pass these verification gates.
+
+### Initial Verification Checklist (Before Acceptance)
+
+- **VR-1 (MUST)** HTML uses semantic elements and includes accessibility attributes (alt text, ARIA labels)
+- **VR-2 (MUST)** Responsive design implemented correctly at mobile (375px), tablet (768px), desktop (1024px+)
+- **VR-3 (MUST)** Styling follows design system (colors, spacing, typography match specifications)
+- **VR-4 (MUST)** No console errors or warnings; code passes linting without issues
+- **VR-5 (MUST)** Form inputs (if any) are validated client-side; error messages are user-friendly
+- **VR-6 (SHOULD)** Code is clean, readable, and maintainable; no dead code or unnecessary comments
+- **VR-7 (SHOULD)** Security considerations met (inputs sanitized, no sensitive data exposed)
+- **VR-8 (SHOULD)** Performance is acceptable (images optimized, no rendering bottlenecks)
+
+### Decision Tree After Verification
+
+```
+Does code pass all MUST checks?
+├─ YES: Accept and move to testing phase
+└─ NO: Choose one approach:
+    ├─ Minor fixes needed: Request AI refinement with specific feedback
+    ├─ Major issues: Request AI regeneration with updated specifications
+    └─ Structural problems: Manual refactor or request architectural review from AI
+```
+
+### When to Regenerate vs. Refactor
+
+- **Regenerate (AI):** When specifications weren't clear, entire component structure is wrong, or multiple verification checks fail
+- **Refactor (Manual):** When code is mostly good but needs minor adjustments, spacing tweaks, or edge case handling
+- **Refactor (AI-Assisted):** When issues are systematic (e.g., all media queries off, or naming conventions inconsistent)
+
+---
+
+## 8 — Testing Strategy# AI Guidelines for Website Development
+
+## Finance App Landing Page (Revamp)
+
+These guidelines enable effective AI-assisted development through a human-in-the-loop, iterative workflow. The process follows a cycle of AI generation, human verification, refinement, testing, and integration. **MUST** rules are enforced checkpoints; **SHOULD** rules are strongly recommended; **CONSIDER** rules are situational best practices.
+
+---
+
+## 0 — The AI-Assisted Development Workflow
+
+This project follows an iterative, human-in-the-loop cycle for all AI-generated code:
+
+### Phase 1: Planning & Specifications
+
+- Define clear requirements, constraints, and design goals
+- Create detailed specifications for AI to understand scope
+- Establish project-specific guidelines (this document)
+
+### Phase 2: Iterative Development Cycle
+
+For each feature or component:
+
+1. **Generation (AI):** Generate code based on detailed specifications and these guidelines
+2. **Verification (Human):** Review generated code against the checklists and standards
+3. **Decision:** Either accept, request regeneration with updated specs, or manually refactor
+4. **Refinement:** Apply manual refactoring or request AI improvements iteratively
+5. **Testing (Human):** Validate functionality, performance, and accessibility
+6. **Integration:** Merge verified code into main codebase with clear commit message
+
+**Key Principle:** AI assists, human verifies. Always review, never blindly accept.
+
+---
+
+## 1 — Effective AI Prompting
+
+When requesting AI to generate or refactor code:
+
+- **SP-1 (MUST)** Provide clear, detailed specifications including layout, functionality, and constraints
+- **SP-2 (MUST)** Reference these guidelines explicitly: "Follow the project's AI Guidelines document"
+- **SP-3 (SHOULD)** Include existing code snippets for context and consistency
+- **SP-4 (SHOULD)** Specify design system details (colors, spacing, typography, breakpoints)
+- **SP-5 (SHOULD)** List explicit requirements (accessibility, browser support, performance targets)
+- **SP-6 (CONSIDER)** Provide examples of similar components or styles in the codebase
+- **SP-7 (SHOULD NOT)** Make vague requests; specificity reduces iteration cycles
+
+### Prompting Template
+
+```
+Generate [component/section] with the following requirements:
+- Specification: [detailed description]
+- Design: [colors, spacing, layout]
+- Interactions: [animations, hover states]
+- Responsive: [mobile/tablet/desktop behavior]
+- Accessibility: [specific ARIA, keyboard nav, semantic HTML]
+- Constraints: [no external libraries, performance target, etc.]
+- Reference: Follow the project's AI Guidelines document
+
+Current context: [existing code or design patterns to match]
+```
+
+---
+
+## 2 — Before Development
 
 - **BP-1 (MUST)** Provide AI with detailed component requirements, including layout, responsiveness, and interactions.
 - **BP-2 (MUST)** Specify design system details (colors, spacing, typography) to ensure consistency.
@@ -26,7 +126,9 @@ These guidelines ensure maintainability, performance, security, and code quality
 
 ---
 
-## 3 — Code Quality & Styling
+---
+
+## 4 — Code Quality & Styling
 
 - **CQ-1 (MUST)** Keep component code clean and readable; avoid excessive nesting and long functions.
 - **CQ-2 (MUST)** Use consistent naming conventions for classes, variables, and components across all files.
@@ -38,7 +140,7 @@ These guidelines ensure maintainability, performance, security, and code quality
 
 ---
 
-## 4 — Component Architecture
+## 5 — Component Architecture
 
 - **CA-1 (SHOULD)** Keep components focused on a single responsibility (header, hero, feature section, footer, etc.).
 - **CA-2 (MUST)** Use clear, descriptive component names that match their purpose (e.g., `HeroSection`, `FeatureCard`, `CTAButton`).
@@ -46,20 +148,6 @@ These guidelines ensure maintainability, performance, security, and code quality
 - **CA-4 (SHOULD)** Use props for component flexibility (text, images, links) to support reusability.
 - **CA-5 (MUST)** Implement proper prop defaults and validation for optional props.
 - **CA-6 (SHOULD)** Separate UI components from layout components for clarity.
-
----
-
-## 5 — Animations & Interactions
-
-- **AI-1 (MUST)** Use anime.js for consistent, performant animations across the site.
-- **AI-2 (SHOULD)** Verify all animations perform smoothly (60fps) on mobile devices.
-- **AI-3 (SHOULD)** Implement animations that enhance UX, not distract from it.
-- **AI-4 (CONSIDER)** Use CSS animations for simple transitions; reserve JavaScript animations for complex sequences.
-- **AI-5 (MUST)** Test animations with `prefers-reduced-motion` media query for accessibility compliance.
-
----
-
-## 6 — Testing Strategy
 
 - **TS-1 (SHOULD)** Test critical user flows manually across different browsers and devices.
 - **TS-2 (SHOULD)** Verify responsive behavior at key breakpoints (mobile 375px, tablet 768px, desktop 1024px+).
@@ -70,7 +158,7 @@ These guidelines ensure maintainability, performance, security, and code quality
 
 ---
 
-## 7 — Performance & Optimization
+## 9 — Performance & Optimization
 
 - **PO-1 (MUST)** Optimize all images for web (use WebP with fallbacks, responsive sizes).
 - **PO-2 (MUST)** Lazy-load images below the fold to improve initial page load.
@@ -81,7 +169,7 @@ These guidelines ensure maintainability, performance, security, and code quality
 
 ---
 
-## 8 — Security & Privacy
+## 10 — Security & Privacy
 
 - **SP-1 (MUST)** Sanitize all user inputs from forms to prevent XSS attacks.
 - **SP-2 (SHOULD)** Use HTTPS everywhere and implement proper CORS policies.
@@ -91,7 +179,7 @@ These guidelines ensure maintainability, performance, security, and code quality
 
 ---
 
-## 9 — Code Organization
+## 11 — Code Organization
 
 - **CO-1 (MUST)** Use a clear folder structure:
 
@@ -113,7 +201,7 @@ src/
 
 ---
 
-## 10 — Tooling & Quality Gates
+## 12 — Tooling & Quality Gates
 
 - **TQ-1 (MUST)** `prettier --check` passes on all files.
 - **TQ-2 (MUST)** `eslint --fix` passes with zero warnings.
@@ -122,7 +210,7 @@ src/
 
 ---
 
-## 11 — Git & Deployment
+## 13 — Git & Deployment
 
 - **GD-1 (MUST)** Use Conventional Commits format: `<type>: <description>`
   - Types: `feat`, `fix`, `style`, `refactor`, `perf`, `docs`
@@ -133,22 +221,77 @@ src/
 
 ---
 
-## AI Code Generation Checklist
+## 14 — AI Code Verification & Acceptance
 
-Before accepting AI-generated code, verify:
+This section formalizes the verification process every AI-generated component must pass.
 
-1. **HTML Structure**: Semantic elements used? Accessibility attributes present?
-2. **Responsiveness**: Mobile-first approach? Media queries at correct breakpoints?
-3. **Styling**: Follows design system? CSS variables used? No inline styles (except dynamic)?
-4. **Performance**: Images optimized? No unnecessary re-renders? Animations smooth?
-5. **Accessibility**: Keyboard navigation works? Color contrast sufficient? Alt text present?
-6. **Browser Compatibility**: Works across major browsers?
-7. **Code Quality**: Clean, readable, maintainable? No dead code or console logs?
-8. **Security**: User inputs validated? No sensitive data exposed?
+### Code Review Checklist (Required Before Merging)
+
+**HTML & Accessibility**
+
+- [ ] Uses semantic HTML (header, nav, main, section, article, footer, etc.)
+- [ ] All images have descriptive alt text
+- [ ] Form labels properly associated with inputs
+- [ ] Heading hierarchy is correct (no skipped levels)
+- [ ] ARIA attributes used appropriately (not overused)
+- [ ] Keyboard navigation works throughout component
+
+**Responsive Design**
+
+- [ ] Mobile layout (375px) is clean and readable
+- [ ] Tablet layout (768px) looks appropriate
+- [ ] Desktop layout (1024px+) follows design system
+- [ ] Media queries use correct breakpoints
+- [ ] Touch targets are sufficient on mobile (48px minimum)
+- [ ] Images are responsive (srcset or CSS sizing)
+
+**Styling & Design System**
+
+- [ ] Colors match design system specifications
+- [ ] Spacing uses defined scale (4px, 8px, 12px, 16px, 24px, 32px, 48px, 64px)
+- [ ] Typography matches design system (font sizes, weights, line heights)
+- [ ] CSS uses design tokens (variables) consistently
+- [ ] No magic numbers in CSS
+- [ ] No inline styles (except dynamic values)
+
+**Code Quality**
+
+- [ ] Component name is descriptive and matches file name
+- [ ] No dead code, console logs, or debug statements
+- [ ] Props have clear, descriptive names
+- [ ] Code is readable without extensive comments
+- [ ] No unnecessary nesting or overly complex selectors
+
+**Performance & Accessibility**
+
+- [ ] Images are optimized (compressed, correct format)
+- [ ] Animations test well with `prefers-reduced-motion`
+- [ ] Animations are smooth (60fps) on mobile devices
+- [ ] No performance red flags (avoid transform expensive properties on every frame)
+- [ ] Lighthouse score maintained at 85+
+
+**Security & Validation**
+
+- [ ] Form inputs are validated
+- [ ] Error messages are user-friendly and helpful
+- [ ] No sensitive data in code or console
+- [ ] XSS vulnerabilities addressed
+
+### Verification Sign-Off
+
+Before accepting AI-generated code, a human reviewer must:
+
+1. ✅ Run through the checklist above
+2. ✅ Test responsiveness on multiple devices
+3. ✅ Test keyboard navigation
+4. ✅ Verify accessibility with screen reader
+5. ✅ Run linting and Prettier
+6. ✅ Run Lighthouse audit
+7. ✅ Make decision: Accept / Regenerate / Refactor
 
 ---
 
-## Project-Specific Guidelines
+## 15 — Project-Specific Guidelines
 
 ### Design System
 
@@ -176,7 +319,7 @@ Before accepting AI-generated code, verify:
 
 ---
 
-## Productivity Shortcuts
+## 16 — Productivity Shortcuts
 
 ### XFRESH
 
@@ -234,3 +377,34 @@ Create a comprehensive testing checklist:
 - Animation smoothness and accessibility
 Sort by user impact.
 ```
+
+---
+
+## 17 — The Human-in-the-Loop Philosophy
+
+These guidelines exist to enable **efficient AI-assisted development without sacrificing code quality**.
+
+### Core Principles
+
+1. **AI accelerates, humans verify:** AI generates code quickly; humans ensure it meets standards
+2. **Iterative, not one-shot:** Expect to regenerate or refactor; this is normal and expected
+3. **Detailed specs reduce iterations:** Clear specifications lead to better first-generation code
+4. **Verification is non-negotiable:** Every checklist item matters; don't skip for speed
+5. **Smart regeneration:** If code fails verification, regenerate with updated specs rather than struggling through refactoring
+6. **Security and accessibility first:** Never trade quality on these for speed
+7. **Documentation matters:** Clear commit messages and code help future refactoring
+
+### Expected Workflow
+
+- **Week 1:** Establish guidelines, create project specs, set up folder structure (40% AI, 60% human)
+- **Week 2-3:** Generate components iteratively, verify, refine (70% AI, 30% human)
+- **Week 4:** Polish, optimize, final testing (30% AI, 70% human)
+
+### Success Metrics
+
+- ✅ All code passes verification checklist
+- ✅ Lighthouse scores maintained at 85+
+- ✅ Zero accessibility violations
+- ✅ Clean Git history with descriptive commits
+- ✅ Code is maintainable by someone unfamiliar with the project
+- ✅ Development was faster than solo development without sacrificing quality

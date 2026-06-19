@@ -152,12 +152,6 @@
 
 ---
 
-## Related Issues
-
-Closes #[issue number]
-
----
-
 ## Reviewer Notes
 
 **Suggested Review Focus:**

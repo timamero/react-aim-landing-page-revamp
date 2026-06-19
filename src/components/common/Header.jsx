@@ -1,30 +1,20 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import Button from "./Button";
 import { navLinks, headerCta } from "../../data/navigation";
-import {
-  initHeaderLoadAnimations,
-  initLogoHover,
-} from "../../utils/headerAnimations";
+import { initHeaderLoadAnimations } from "../../utils/headerAnimations";
+import logoIcon from "../../assets/icons/logo.svg";
 
 function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const logoRef = useRef(null);
   const navListRef = useRef(null);
 
   const closeMenu = useCallback(() => setMenuOpen(false), []);
   const toggleMenu = useCallback(() => setMenuOpen((open) => !open), []);
 
   useEffect(() => {
-    const logoEl = logoRef.current;
     const navItems = navListRef.current?.querySelectorAll(".header__nav-item");
-    const cleanupLoad = initHeaderLoadAnimations(navItems);
-    const cleanupLogo = initLogoHover(logoEl);
-
-    return () => {
-      cleanupLoad();
-      cleanupLogo();
-    };
+    return initHeaderLoadAnimations(navItems);
   }, []);
 
   useEffect(() => {
@@ -59,8 +49,16 @@ function Header() {
       className={`header${isScrolled ? " header--scrolled" : ""}${menuOpen ? " header--menu-open" : ""}`}
     >
       <div className="header__inner container">
-        <a href="#hero" className="header__logo" ref={logoRef}>
-          Aim
+        <a href="#hero" className="header__logo">
+          <img
+            src={logoIcon}
+            alt=""
+            className="header__logo-icon"
+            width={32}
+            height={32}
+            decoding="async"
+          />
+          <span className="header__logo-text">Aim</span>
         </a>
 
         <button

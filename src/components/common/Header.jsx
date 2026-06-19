@@ -1,7 +1,10 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
-import Button from './Button';
-import { navLinks, headerCta } from '../../data/navigation';
-import { initHeaderLoadAnimations, initLogoHover } from '../../utils/headerAnimations';
+import { useState, useEffect, useRef, useCallback } from "react";
+import Button from "./Button";
+import { navLinks, headerCta } from "../../data/navigation";
+import {
+  initHeaderLoadAnimations,
+  initLogoHover,
+} from "../../utils/headerAnimations";
 
 function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -14,7 +17,7 @@ function Header() {
 
   useEffect(() => {
     const logoEl = logoRef.current;
-    const navItems = navListRef.current?.querySelectorAll('.header__nav-item');
+    const navItems = navListRef.current?.querySelectorAll(".header__nav-item");
     const cleanupLoad = initHeaderLoadAnimations(navItems);
     const cleanupLogo = initLogoHover(logoEl);
 
@@ -27,23 +30,23 @@ function Header() {
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 0);
     onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   useEffect(() => {
     if (!menuOpen) return undefined;
 
     const onKeyDown = (event) => {
-      if (event.key === 'Escape') closeMenu();
+      if (event.key === "Escape") closeMenu();
     };
 
-    document.body.style.overflow = 'hidden';
-    document.addEventListener('keydown', onKeyDown);
+    document.body.style.overflow = "hidden";
+    document.addEventListener("keydown", onKeyDown);
 
     return () => {
-      document.body.style.overflow = '';
-      document.removeEventListener('keydown', onKeyDown);
+      document.body.style.overflow = "";
+      document.removeEventListener("keydown", onKeyDown);
     };
   }, [menuOpen, closeMenu]);
 
@@ -53,7 +56,7 @@ function Header() {
 
   return (
     <header
-      className={`header${isScrolled ? ' header--scrolled' : ''}${menuOpen ? ' header--menu-open' : ''}`}
+      className={`header${isScrolled ? " header--scrolled" : ""}${menuOpen ? " header--menu-open" : ""}`}
     >
       <div className="header__inner container">
         <a href="#hero" className="header__logo" ref={logoRef}>
@@ -63,7 +66,7 @@ function Header() {
         <button
           type="button"
           className="header__menu-toggle"
-          aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+          aria-label={menuOpen ? "Close menu" : "Open menu"}
           aria-expanded={menuOpen}
           aria-controls="header-nav"
           onClick={toggleMenu}
@@ -73,13 +76,17 @@ function Header() {
 
         <nav
           id="header-nav"
-          className={`header__nav${menuOpen ? ' header__nav--open' : ''}`}
+          className={`header__nav${menuOpen ? " header__nav--open" : ""}`}
           aria-label="Main navigation"
         >
           <ul className="header__nav-list" ref={navListRef}>
             {navLinks.map((link) => (
               <li key={link.href} className="header__nav-item">
-                <a href={link.href} className="header__nav-link" onClick={handleNavClick}>
+                <a
+                  href={link.href}
+                  className="header__nav-link"
+                  onClick={handleNavClick}
+                >
                   {link.label}
                 </a>
               </li>
@@ -101,7 +108,7 @@ function Header() {
 
       <button
         type="button"
-        className={`header__overlay${menuOpen ? ' header__overlay--visible' : ''}`}
+        className={`header__overlay${menuOpen ? " header__overlay--visible" : ""}`}
         aria-label="Close menu"
         tabIndex={menuOpen ? 0 : -1}
         onClick={closeMenu}

@@ -88,3 +88,14 @@ Reference these documents:
 
 Generate the [HeroSection] following these established patterns...
 ```
+
+```
+You are updating [HeroSection] component.
+
+Reference these documents:
+- PROJECT_SPECS.md (for requirements)
+- AI_GUIDELINES.md (for code quality standards)
+- ARCHITECTURE.md (for architectural patterns)
+
+[..] following these established patterns...
+```

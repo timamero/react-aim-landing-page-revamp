@@ -30,12 +30,13 @@
 }
 
 .header__menu-toggle {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 48px;
   height: 48px;
-  z-index: var(--z-header-nav);
+  z-index: var(--z-header-toggle);
 }
 
 .header__menu-icon,
@@ -125,6 +126,11 @@
 }
 
 @media (max-width: 1023px) {
+  .header__inner {
+    position: relative;
+    z-index: var(--z-header-toggle);
+  }
+
   .header__menu-toggle {
     display: flex;
   }

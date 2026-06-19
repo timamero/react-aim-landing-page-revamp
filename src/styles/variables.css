@@ -32,6 +32,7 @@
   /* Layout */
   --header-height: 72px;
   --z-header: 100;
-  --z-header-nav: 110;
   --z-header-overlay: 105;
+  --z-header-nav: 110;
+  --z-header-toggle: 120;
 }

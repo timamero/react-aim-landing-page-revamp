@@ -8,6 +8,7 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: clip;
 }
 
 body {
@@ -15,6 +16,8 @@ body {
   font: var(--font-body);
   color: var(--color-text);
   background-color: var(--color-white);
+  overflow-x: clip;
+  max-width: 100%;
 }
 
 a {

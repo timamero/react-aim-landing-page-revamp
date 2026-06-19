@@ -10,8 +10,8 @@ const COIN_PARTS = [
 ];
 
 const MAX_MOUSE_PULL = 18;
-const BASE_COIN_SCALE = 0.28;
-const COIN_SCALE_STAGGER = 0.035;
+const BASE_COIN_SCALE = 0.18;
+const COIN_SCALE_STAGGER = 0.025;
 
 export function prefersReducedMotion() {
   return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -24,7 +24,7 @@ export function prepareHeroSvg(raw) {
       const cleaned = attrs
         .replace(/\s*width="100%"/i, '')
         .replace(/\s*height="100%"/i, '');
-      return `<svg${cleaned} class="hero__illustration-svg" aria-hidden="true" focusable="false">`;
+      return `<svg${cleaned} class="hero__illustration-svg" aria-hidden="true" focusable="false" overflow="hidden">`;
     });
 }
 

@@ -1,13 +1,12 @@
 import Header from './components/common/Header';
+import HeroSection from './components/sections/HeroSection';
 
 function App() {
   return (
     <>
       <Header />
       <main>
-        <section id="hero" style={{ minHeight: '100vh', padding: '2rem' }}>
-          <h1>Hero placeholder</h1>
-        </section>
+        <HeroSection />
         <section id="about" style={{ minHeight: '50vh', padding: '2rem' }}>
           <h2>About placeholder</h2>
         </section>

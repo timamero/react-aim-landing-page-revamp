@@ -7,8 +7,7 @@
 Exploration first
 
 ```
-Given the specifications in PROJECT_SPECS.md and constraints (Vite, React, anime.js, vanilla CSS,
-no state management), explore 2-3 architectural approaches for:
+Given the specifications in PROJECT_SPECS.md, guidelines in AI_GUIDELINES.md and constraints (Vite, React, anime.js, vanilla CSS, no state management), explore 2-3 architectural approaches for:
 
 - Scroll animation management across all sections
 - Component composition patterns

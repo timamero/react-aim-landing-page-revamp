@@ -1,1 +1,41 @@
-/* Design tokens: color palette, typography scale, spacing scale, breakpoints, and semantic color variables */
+:root {
+  /* Colors */
+  --color-primary: #0066ff;
+  --color-navy: #001a4d;
+  --color-accent: #00d4aa;
+  --color-bg: #f5f7fa;
+  --color-white: #ffffff;
+  --color-text: #1a1a2e;
+  --color-text-secondary: #525252;
+  --color-text-tertiary: #8b92a0;
+  --color-border: #e0e3eb;
+
+  /* Spacing */
+  --space-xs: 8px;
+  --space-sm: 12px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+  --space-4xl: 80px;
+  --space-5xl: 96px;
+
+  /* Typography */
+  --font-family:
+    "DM Sans", "Inter", "Public Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-family-heading:
+    "Urbanist", "Montserrat", "Century Gothic", AppleGothic, sans-serif;
+  --font-h1: 700 48px/56px var(--font-family-heading);
+  --font-h2: 700 36px/44px var(--font-family-heading);
+  --font-h3: 600 24px/32px var(--font-family-heading);
+  --font-body: 400 16px/24px var(--font-family);
+  --font-body-sm: 400 14px/22px var(--font-family);
+
+  /* Layout */
+  --header-height: 72px;
+  --z-header: 100;
+  --z-header-overlay: 105;
+  --z-header-nav: 110;
+  --z-header-toggle: 120;
+}

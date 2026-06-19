@@ -38,7 +38,8 @@
 
 ### Typography
 
-**Font Family:** Inter (system fallback: -apple-system, BlinkMacSystemFont, Segoe UI)
+**Display Font Family:** Urbanist (system fallback: Montserrat, Century Gothic, AppleGothic, sans-serif)
+**Body Font Family:** DM Sans (system fallback : Inter, Public Sans, Helvetica Neue, Arial, sans-serif)
 
 **Scale:**
 

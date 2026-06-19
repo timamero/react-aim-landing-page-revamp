@@ -22,10 +22,13 @@
   --space-5xl: 96px;
 
   /* Typography */
-  --font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --font-h1: 700 48px/56px var(--font-family);
-  --font-h2: 700 36px/44px var(--font-family);
-  --font-h3: 600 24px/32px var(--font-family);
+  --font-family:
+    "DM Sans", "Inter", "Public Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-family-heading:
+    "Urbanist", "Montserrat", "Century Gothic", AppleGothic, sans-serif;
+  --font-h1: 700 48px/56px var(--font-family-heading);
+  --font-h2: 700 36px/44px var(--font-family-heading);
+  --font-h3: 600 24px/32px var(--font-family-heading);
   --font-body: 400 16px/24px var(--font-family);
   --font-body-sm: 400 14px/22px var(--font-family);
 

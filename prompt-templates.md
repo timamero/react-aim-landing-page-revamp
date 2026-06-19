@@ -14,6 +14,12 @@ Given the specifications in PROJECT_SPECS.md, guidelines in AI_GUIDELINES.md and
 - CSS organization strategy
 
 Show trade-offs in terms of maintainability, performance, and code reusability.
+For each approach:
+1. Create a distinct name
+2. Explain the pattern with a brief code example
+3. List specific trade-offs
+
+Format for easy comparison (could be table or structured sections).
 ```
 
 Generate report

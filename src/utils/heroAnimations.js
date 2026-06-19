@@ -1,16 +1,17 @@
 import { animate, stagger } from 'animejs';
 
-const SVG_ANIMATED_PARTS = [
+const COIN_PARTS = [
   'HUGE-COIN',
   'HOLD-COIN',
   'SMALL-COINS-PILE',
   'TALL-COIN-PILE-',
   'MEDIUM-COIN-PILE',
   'LITTLE-COIN-PILE',
-  'BILLS',
-  'GREEN-CHARACTER',
-  'ORANGE-CHARACTER',
 ];
+
+const MAX_MOUSE_PULL = 18;
+const BASE_COIN_SCALE = 0.28;
+const COIN_SCALE_STAGGER = 0.035;
 
 export function prefersReducedMotion() {
   return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -47,53 +48,68 @@ function initIllustrationEntrance(illustrationEl) {
   });
 }
 
-function initSvgPartAnimations(illustrationEl) {
-  const parts = SVG_ANIMATED_PARTS.flatMap((id) => {
+function initIllustrationMouseFollow(visualEl) {
+  const target = visualEl.querySelector('.hero__illustration-rotator');
+  if (!target) return () => {};
+
+  const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  if (!canHover) return () => {};
+
+  let rafId = null;
+  let pullX = 0;
+  let pullY = 0;
+
+  const applyTransform = () => {
+    rafId = null;
+    target.style.transform = `translate(${pullX}px, ${pullY}px)`;
+  };
+
+  const onMouseMove = (event) => {
+    const rect = visualEl.getBoundingClientRect();
+    const relativeX = (event.clientX - rect.left) / rect.width - 0.5;
+    const relativeY = (event.clientY - rect.top) / rect.height - 0.5;
+
+    pullX = relativeX * MAX_MOUSE_PULL * 2;
+    pullY = relativeY * MAX_MOUSE_PULL * 2;
+
+    if (!rafId) {
+      rafId = requestAnimationFrame(applyTransform);
+    }
+  };
+
+  const onMouseLeave = () => {
+    pullX = 0;
+    pullY = 0;
+    if (!rafId) {
+      rafId = requestAnimationFrame(applyTransform);
+    }
+  };
+
+  visualEl.addEventListener('mousemove', onMouseMove);
+  visualEl.addEventListener('mouseleave', onMouseLeave);
+
+  return () => {
+    visualEl.removeEventListener('mousemove', onMouseMove);
+    visualEl.removeEventListener('mouseleave', onMouseLeave);
+    if (rafId) cancelAnimationFrame(rafId);
+    target.style.transform = '';
+  };
+}
+
+function getHeroScrollProgress(heroEl) {
+  const rect = heroEl.getBoundingClientRect();
+  const scrolled = Math.max(-rect.top, 0);
+  const range = rect.height * 0.9;
+  return Math.min(scrolled / range, 1);
+}
+
+function initCoinScrollScale(illustrationEl, heroEl) {
+  const coins = COIN_PARTS.flatMap((id) => {
     const el = illustrationEl.querySelector(`[id="${id}"]`);
     return el ? [el] : [];
   });
 
-  if (!parts.length) return () => {};
-
-  const coinParts = parts.filter((el) => el.id !== 'GREEN-CHARACTER' && el.id !== 'ORANGE-CHARACTER');
-  const characterParts = parts.filter(
-    (el) => el.id === 'GREEN-CHARACTER' || el.id === 'ORANGE-CHARACTER',
-  );
-
-  const animations = [];
-
-  if (coinParts.length) {
-    animations.push(
-      animate(coinParts, {
-        translateY: [-6, 6],
-        duration: 2800,
-        delay: stagger(180, { from: 'center' }),
-        alternate: true,
-        loop: true,
-        ease: 'inOutQuad',
-      }),
-    );
-  }
-
-  if (characterParts.length) {
-    animations.push(
-      animate(characterParts, {
-        translateY: [0, -8],
-        duration: 3200,
-        delay: stagger(400),
-        alternate: true,
-        loop: true,
-        ease: 'inOutSine',
-      }),
-    );
-  }
-
-  return () => animations.forEach((animation) => animation.pause());
-}
-
-function initIllustrationScrollRotation(visualEl) {
-  const rotator = visualEl.querySelector('.hero__illustration-rotator');
-  if (!rotator) return () => {};
+  if (!coins.length || !heroEl) return () => {};
 
   let active = true;
 
@@ -103,12 +119,19 @@ function initIllustrationScrollRotation(visualEl) {
     },
     { threshold: 0 },
   );
-  visibilityObserver.observe(visualEl);
+  visibilityObserver.observe(heroEl);
 
   const onScroll = () => {
     if (!active) return;
-    const progress = Math.min(window.scrollY / window.innerHeight, 1);
-    rotator.style.transform = `rotate(${progress * 6}deg)`;
+
+    const progress = getHeroScrollProgress(heroEl);
+
+    coins.forEach((coin, index) => {
+      const scale = 1 + progress * (BASE_COIN_SCALE + index * COIN_SCALE_STAGGER);
+      coin.style.transform = `scale(${scale})`;
+      coin.style.transformBox = 'fill-box';
+      coin.style.transformOrigin = 'center';
+    });
   };
 
   onScroll();
@@ -117,22 +140,26 @@ function initIllustrationScrollRotation(visualEl) {
   return () => {
     visibilityObserver.disconnect();
     window.removeEventListener('scroll', onScroll);
-    rotator.style.transform = '';
+    coins.forEach((coin) => {
+      coin.style.transform = '';
+      coin.style.transformBox = '';
+      coin.style.transformOrigin = '';
+    });
   };
 }
 
-export function initHeroAnimations({ contentEl, visualEl, illustrationEl }) {
+export function initHeroAnimations({ contentEl, visualEl, illustrationEl, heroEl }) {
   if (prefersReducedMotion() || !contentEl || !visualEl) return () => {};
 
   const loadAnimation = initHeroLoad(contentEl);
   const entranceAnimation = illustrationEl ? initIllustrationEntrance(illustrationEl) : null;
-  const pauseSvgParts = illustrationEl ? initSvgPartAnimations(illustrationEl) : () => {};
-  const removeScroll = initIllustrationScrollRotation(visualEl);
+  const removeMouseFollow = initIllustrationMouseFollow(visualEl);
+  const removeCoinScale = illustrationEl ? initCoinScrollScale(illustrationEl, heroEl) : () => {};
 
   return () => {
     loadAnimation.pause();
     entranceAnimation?.pause();
-    pauseSvgParts();
-    removeScroll();
+    removeMouseFollow();
+    removeCoinScale();
   };
 }

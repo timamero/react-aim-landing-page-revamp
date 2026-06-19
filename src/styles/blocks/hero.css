@@ -4,7 +4,7 @@
   display: flex;
   align-items: center;
   padding-block: calc(var(--header-height) + var(--space-xl)) var(--space-3xl);
-  overflow: hidden;
+  overflow: clip;
 }
 
 .hero__background {
@@ -89,6 +89,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: visible;
 }
 
 .hero__illustration {
@@ -99,6 +100,7 @@
 .hero__illustration-rotator {
   transform-origin: center center;
   will-change: transform;
+  transition: transform 180ms ease-out;
 }
 
 .hero__illustration-inner {
@@ -111,6 +113,18 @@
   height: auto;
 }
 
+.hero__illustration-svg [id='HUGE-COIN'],
+.hero__illustration-svg [id='HOLD-COIN'],
+.hero__illustration-svg [id='SMALL-COINS-PILE'],
+.hero__illustration-svg [id='TALL-COIN-PILE-'],
+.hero__illustration-svg [id='MEDIUM-COIN-PILE'],
+.hero__illustration-svg [id='LITTLE-COIN-PILE'] {
+  transform-box: fill-box;
+  transform-origin: center;
+  will-change: transform;
+  transition: transform 120ms linear;
+}
+
 @media (min-width: 768px) {
   .hero__content h1 {
     max-width: 16ch;
@@ -118,17 +132,35 @@
 }
 
 @media (min-width: 1024px) {
+  .hero {
+    overflow: visible;
+  }
+
   .hero__layout {
-    grid-template-columns: 3fr 2fr;
-    gap: var(--space-3xl);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: var(--space-2xl);
   }
 
   .hero__visual {
     justify-content: flex-end;
+    min-height: 560px;
   }
 
   .hero__illustration {
-    max-width: 100%;
+    max-width: none;
+    width: 185%;
+    margin-inline-end: -22%;
+  }
+}
+
+@media (min-width: 1440px) {
+  .hero__visual {
+    min-height: 640px;
+  }
+
+  .hero__illustration {
+    width: 220%;
+    margin-inline-end: -30%;
   }
 }
 
@@ -144,5 +176,16 @@
 
   .hero__illustration-rotator {
     transform: none !important;
+    transition: none;
+  }
+
+  .hero__illustration-svg [id='HUGE-COIN'],
+  .hero__illustration-svg [id='HOLD-COIN'],
+  .hero__illustration-svg [id='SMALL-COINS-PILE'],
+  .hero__illustration-svg [id='TALL-COIN-PILE-'],
+  .hero__illustration-svg [id='MEDIUM-COIN-PILE'],
+  .hero__illustration-svg [id='LITTLE-COIN-PILE'] {
+    transform: none !important;
+    transition: none;
   }
 }

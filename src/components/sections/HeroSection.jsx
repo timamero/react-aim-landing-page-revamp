@@ -6,6 +6,7 @@ import { initHeroAnimations, prepareHeroSvg } from '../../utils/heroAnimations';
 const heroSvgMarkup = prepareHeroSvg(heroSvgRaw);
 
 function HeroSection() {
+  const heroRef = useRef(null);
   const contentRef = useRef(null);
   const visualRef = useRef(null);
   const illustrationRef = useRef(null);
@@ -15,11 +16,12 @@ function HeroSection() {
       contentEl: contentRef.current,
       visualEl: visualRef.current,
       illustrationEl: illustrationRef.current,
+      heroEl: heroRef.current,
     });
   }, []);
 
   return (
-    <section id="hero" className="hero" aria-labelledby="hero-heading">
+    <section id="hero" className="hero" ref={heroRef} aria-labelledby="hero-heading">
       <div className="hero__background" aria-hidden="true">
         <div className="hero__shape hero__shape--1" />
         <div className="hero__shape hero__shape--2" />

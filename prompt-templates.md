@@ -79,23 +79,33 @@ Components that follow patterns:
 ## Code Generation
 
 ```
-You are building the [HeroSection] component.
-
+Generate [component/section] with the following requirements:
+- Specification: [detailed description]
+- Design: [colors, spacing, layout]
+- Interactions: [animations, hover states]
+- Responsive: [mobile/tablet/desktop behavior]
+- Accessibility: [specific ARIA, keyboard nav, semantic HTML]
+- Constraints: [no external libraries, performance target, etc.]
 Reference these documents:
 - PROJECT_SPECS.md (for requirements)
 - AI_GUIDELINES.md (for code quality standards)
 - ARCHITECTURE.md (for architectural patterns)
 
-Generate the [HeroSection] following these established patterns...
+Current context: [existing code or design patterns to match]
 ```
 
 ```
-You are updating [HeroSection] component.
-
+You are updating [HeroSection] component with the followin requirements:
+- Specification: [detailed description]
+- Design: [colors, spacing, layout]
+- Interactions: [animations, hover states]
+- Responsive: [mobile/tablet/desktop behavior]
+- Accessibility: [specific ARIA, keyboard nav, semantic HTML]
+- Constraints: [no external libraries, performance target, etc.]
 Reference these documents:
 - PROJECT_SPECS.md (for requirements)
 - AI_GUIDELINES.md (for code quality standards)
 - ARCHITECTURE.md (for architectural patterns)
 
-[..] following these established patterns...
+Current context: [existing code or design patterns to match]
 ```

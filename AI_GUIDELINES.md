@@ -1,4 +1,85 @@
----
+## 0 — AI Guidelines for Website Development
+
+### Finance App Landing Page (Revamp)
+
+These guidelines enable effective AI-assisted development through a human-in-the-loop, iterative workflow. The process follows a cycle of AI generation, human verification, refinement, testing, and integration. **MUST** rules are enforced checkpoints; **SHOULD** rules are strongly recommended; **CONSIDER** rules are situational best practices.
+
+### Phase 1: Planning & Specifications
+
+- Define clear requirements, constraints, and design goals
+- Create detailed specifications for AI to understand scope
+- Establish project-specific guidelines (this document)
+
+### Phase 2: Iterative Development Cycle
+
+For each feature or component:
+
+1. **Generation (AI):** Generate code based on detailed specifications and these guidelines
+2. **Verification (Human):** Review generated code against the checklists and standards
+3. **Decision:** Either accept, request regeneration with updated specs, or manually refactor
+4. **Refinement:** Apply manual refactoring or request AI improvements iteratively
+5. **Testing (Human):** Validate functionality, performance, and accessibility
+6. **Integration:** Merge verified code into main codebase with clear commit message
+
+**Key Principle:** AI assists, human verifies. Always review, never blindly accept.
+
+## 1 — Effective AI Prompting
+
+When requesting AI to generate or refactor code:
+
+- **SP-1 (MUST)** Provide clear, detailed specifications including layout, functionality, and constraints
+- **SP-2 (MUST)** Reference these guidelines explicitly: "Follow the project's AI Guidelines document"
+- **SP-3 (SHOULD)** Include existing code snippets for context and consistency
+- **SP-4 (SHOULD)** Specify design system details (colors, spacing, typography, breakpoints)
+- **SP-5 (SHOULD)** List explicit requirements (accessibility, browser support, performance targets)
+- **SP-6 (CONSIDER)** Provide examples of similar components or styles in the codebase
+- **SP-7 (SHOULD NOT)** Make vague requests; specificity reduces iteration cycles
+
+### Prompting Templates
+
+Refer to the file [prompt-templates.md](./prompt-templates.md)
+
+## 2 — Before Development
+
+- **BP-1 (MUST)** Provide AI with detailed component requirements, including layout, responsiveness, and interactions.
+- **BP-2 (MUST)** Specify design system details (colors, spacing, typography) to ensure consistency.
+- **BP-3 (SHOULD)** Identify responsive breakpoints and mobile-first requirements upfront.
+- **BP-4 (CONSIDER)** Document any animation or interaction requirements clearly before requesting code.
+
+## 3 — Web Development Standards
+
+- **WD-1 (MUST)** Follow semantic HTML principles and ensure proper accessibility attributes (alt text, ARIA labels, heading hierarchy).
+- **WD-2 (MUST)** Implement responsive design patterns that work across all device sizes (mobile-first approach).
+- **WD-3 (SHOULD)** Optimize for Core Web Vitals (LCP, FID, CLS) through image optimization and efficient animations.
+- **WD-4 (SHOULD)** Use progressive enhancement principles - ensure content is readable without JavaScript.
+- **WD-5 (MUST)** Validate all user inputs (contact forms, email subscriptions) on the client side.
+- **WD-6 (SHOULD)** Implement proper error states for forms and interactions (e.g., failed submissions).
+
+## 4 — Code Quality & Styling
+
+- **CQ-1 (MUST)** Keep component code clean and readable; avoid excessive nesting and long functions.
+- **CQ-2 (MUST)** Use consistent naming conventions for classes, variables, and components across all files.
+- **CQ-3 (SHOULD)** Use CSS utility classes or CSS modules for styling to avoid naming conflicts.
+- **CQ-4 (MUST)** Extract repeated styles into reusable CSS variables or utility classes.
+- **CQ-5 (CONSIDER)** Use CSS-in-JS sparingly; prefer external stylesheets for landing pages.
+- **CQ-6 (SHOULD)** Avoid deep nesting in CSS; keep selectors simple and maintainable.
+- **CQ-7 (SHOULD NOT)** Add comments except for critical design decisions; let code be self-documenting.
+
+## 5 — Component Architecture
+
+- **CA-1 (SHOULD)** Keep components focused on a single responsibility (header, hero, feature section, footer, etc.).
+- **CA-2 (MUST)** Use clear, descriptive component names that match their purpose (e.g., `HeroSection`, `FeatureCard`, `CTAButton`).
+- **CA-3 (SHOULD)** Extract reusable components (buttons, cards, sections) to reduce duplication.
+- **CA-4 (SHOULD)** Use props for component flexibility (text, images, links) to support reusability.
+- **CA-5 (MUST)** Implement proper prop defaults and validation for optional props.
+- **CA-6 (SHOULD)** Separate UI components from layout components for clarity.
+
+- **TS-1 (SHOULD)** Test critical user flows manually across different browsers and devices.
+- **TS-2 (SHOULD)** Verify responsive behavior at key breakpoints (mobile 375px, tablet 768px, desktop 1024px+).
+- **TS-3 (SHOULD)** Test accessibility with keyboard navigation and screen reader simulation.
+- **TS-4 (CONSIDER)** Add unit tests for complex utility functions or form validation logic.
+- **TS-5 (MUST)** Verify form submissions work correctly and display appropriate success/error messages.
+- **TS-6 (SHOULD)** Test cross-browser compatibility (Chrome, Firefox, Safari, Edge).
 
 ## 6 — Animations & Interactions
 
@@ -7,8 +88,6 @@
 - **AI-3 (SHOULD)** Implement animations that enhance UX, not distract from it.
 - **AI-4 (CONSIDER)** Use CSS animations for simple transitions; reserve JavaScript animations for complex sequences.
 - **AI-5 (MUST)** Test animations with `prefers-reduced-motion` media query for accessibility compliance.
-
----
 
 ## 7 — Verification & Review
 
@@ -42,123 +121,7 @@ Does code pass all MUST checks?
 - **Refactor (Manual):** When code is mostly good but needs minor adjustments, spacing tweaks, or edge case handling
 - **Refactor (AI-Assisted):** When issues are systematic (e.g., all media queries off, or naming conventions inconsistent)
 
----
-
-## 8 — Testing Strategy# AI Guidelines for Website Development
-
-## Finance App Landing Page (Revamp)
-
-These guidelines enable effective AI-assisted development through a human-in-the-loop, iterative workflow. The process follows a cycle of AI generation, human verification, refinement, testing, and integration. **MUST** rules are enforced checkpoints; **SHOULD** rules are strongly recommended; **CONSIDER** rules are situational best practices.
-
----
-
-## 0 — The AI-Assisted Development Workflow
-
-This project follows an iterative, human-in-the-loop cycle for all AI-generated code:
-
-### Phase 1: Planning & Specifications
-
-- Define clear requirements, constraints, and design goals
-- Create detailed specifications for AI to understand scope
-- Establish project-specific guidelines (this document)
-
-### Phase 2: Iterative Development Cycle
-
-For each feature or component:
-
-1. **Generation (AI):** Generate code based on detailed specifications and these guidelines
-2. **Verification (Human):** Review generated code against the checklists and standards
-3. **Decision:** Either accept, request regeneration with updated specs, or manually refactor
-4. **Refinement:** Apply manual refactoring or request AI improvements iteratively
-5. **Testing (Human):** Validate functionality, performance, and accessibility
-6. **Integration:** Merge verified code into main codebase with clear commit message
-
-**Key Principle:** AI assists, human verifies. Always review, never blindly accept.
-
----
-
-## 1 — Effective AI Prompting
-
-When requesting AI to generate or refactor code:
-
-- **SP-1 (MUST)** Provide clear, detailed specifications including layout, functionality, and constraints
-- **SP-2 (MUST)** Reference these guidelines explicitly: "Follow the project's AI Guidelines document"
-- **SP-3 (SHOULD)** Include existing code snippets for context and consistency
-- **SP-4 (SHOULD)** Specify design system details (colors, spacing, typography, breakpoints)
-- **SP-5 (SHOULD)** List explicit requirements (accessibility, browser support, performance targets)
-- **SP-6 (CONSIDER)** Provide examples of similar components or styles in the codebase
-- **SP-7 (SHOULD NOT)** Make vague requests; specificity reduces iteration cycles
-
-### Prompting Template
-
-```
-Generate [component/section] with the following requirements:
-- Specification: [detailed description]
-- Design: [colors, spacing, layout]
-- Interactions: [animations, hover states]
-- Responsive: [mobile/tablet/desktop behavior]
-- Accessibility: [specific ARIA, keyboard nav, semantic HTML]
-- Constraints: [no external libraries, performance target, etc.]
-- Reference: Follow the project's AI Guidelines document
-
-Current context: [existing code or design patterns to match]
-```
-
----
-
-## 2 — Before Development
-
-- **BP-1 (MUST)** Provide AI with detailed component requirements, including layout, responsiveness, and interactions.
-- **BP-2 (MUST)** Specify design system details (colors, spacing, typography) to ensure consistency.
-- **BP-3 (SHOULD)** Identify responsive breakpoints and mobile-first requirements upfront.
-- **BP-4 (CONSIDER)** Document any animation or interaction requirements clearly before requesting code.
-
----
-
-## 2 — Web Development Standards
-
-- **WD-1 (MUST)** Follow semantic HTML principles and ensure proper accessibility attributes (alt text, ARIA labels, heading hierarchy).
-- **WD-2 (MUST)** Implement responsive design patterns that work across all device sizes (mobile-first approach).
-- **WD-3 (SHOULD)** Optimize for Core Web Vitals (LCP, FID, CLS) through image optimization and efficient animations.
-- **WD-4 (SHOULD)** Use progressive enhancement principles - ensure content is readable without JavaScript.
-- **WD-5 (MUST)** Validate all user inputs (contact forms, email subscriptions) on the client side.
-- **WD-6 (SHOULD)** Implement proper error states for forms and interactions (e.g., failed submissions).
-
----
-
----
-
-## 4 — Code Quality & Styling
-
-- **CQ-1 (MUST)** Keep component code clean and readable; avoid excessive nesting and long functions.
-- **CQ-2 (MUST)** Use consistent naming conventions for classes, variables, and components across all files.
-- **CQ-3 (SHOULD)** Use CSS utility classes or CSS modules for styling to avoid naming conflicts.
-- **CQ-4 (MUST)** Extract repeated styles into reusable CSS variables or utility classes.
-- **CQ-5 (CONSIDER)** Use CSS-in-JS sparingly; prefer external stylesheets for landing pages.
-- **CQ-6 (SHOULD)** Avoid deep nesting in CSS; keep selectors simple and maintainable.
-- **CQ-7 (SHOULD NOT)** Add comments except for critical design decisions; let code be self-documenting.
-
----
-
-## 5 — Component Architecture
-
-- **CA-1 (SHOULD)** Keep components focused on a single responsibility (header, hero, feature section, footer, etc.).
-- **CA-2 (MUST)** Use clear, descriptive component names that match their purpose (e.g., `HeroSection`, `FeatureCard`, `CTAButton`).
-- **CA-3 (SHOULD)** Extract reusable components (buttons, cards, sections) to reduce duplication.
-- **CA-4 (SHOULD)** Use props for component flexibility (text, images, links) to support reusability.
-- **CA-5 (MUST)** Implement proper prop defaults and validation for optional props.
-- **CA-6 (SHOULD)** Separate UI components from layout components for clarity.
-
-- **TS-1 (SHOULD)** Test critical user flows manually across different browsers and devices.
-- **TS-2 (SHOULD)** Verify responsive behavior at key breakpoints (mobile 375px, tablet 768px, desktop 1024px+).
-- **TS-3 (SHOULD)** Test accessibility with keyboard navigation and screen reader simulation.
-- **TS-4 (CONSIDER)** Add unit tests for complex utility functions or form validation logic.
-- **TS-5 (MUST)** Verify form submissions work correctly and display appropriate success/error messages.
-- **TS-6 (SHOULD)** Test cross-browser compatibility (Chrome, Firefox, Safari, Edge).
-
----
-
-## 9 — Performance & Optimization
+## 8 — Performance & Optimization
 
 - **PO-1 (MUST)** Optimize all images for web (use WebP with fallbacks, responsive sizes).
 - **PO-2 (MUST)** Lazy-load images below the fold to improve initial page load.
@@ -167,9 +130,7 @@ Current context: [existing code or design patterns to match]
 - **PO-5 (SHOULD)** Monitor and maintain good Lighthouse scores (85+).
 - **PO-6 (CONSIDER)** Use a CDN for image and asset delivery if performance is critical.
 
----
-
-## 10 — Security & Privacy
+## 9 — Security & Privacy
 
 - **SP-1 (MUST)** Sanitize all user inputs from forms to prevent XSS attacks.
 - **SP-2 (SHOULD)** Use HTTPS everywhere and implement proper CORS policies.
@@ -177,9 +138,7 @@ Current context: [existing code or design patterns to match]
 - **SP-4 (SHOULD)** Implement rate limiting on form submissions to prevent spam.
 - **SP-5 (MUST)** Validate all form inputs on both client and server side.
 
----
-
-## 11 — Code Organization
+## 10 — Code Organization
 
 - **CO-1 (MUST)** Use a clear folder structure:
 
@@ -199,29 +158,18 @@ src/
 - **CO-3 (SHOULD)** Use barrel exports (`index.js`) for clean imports.
 - **CO-4 (SHOULD)** Store design tokens (colors, spacing) in CSS variables for consistency.
 
----
-
-## 12 — Tooling & Quality Gates
+## 11 — Tooling & Quality Gates
 
 - **TQ-1 (MUST)** `prettier --check` passes on all files.
 - **TQ-2 (MUST)** `eslint --fix` passes with zero warnings.
 - **TQ-3 (SHOULD)** Use pre-commit hooks to enforce formatting and linting.
 - **TQ-4 (SHOULD)** Run Lighthouse audits before deployment.
 
----
+## 12 — Git & Deployment
 
-## 13 — Git & Deployment
+- Git commits, pull requests, and merging will be done manually.
 
-- **GD-1 (MUST)** Use Conventional Commits format: `<type>: <description>`
-  - Types: `feat`, `fix`, `style`, `refactor`, `perf`, `docs`
-  - Example: `feat: add animated feature cards` or `fix: improve hero section responsiveness`
-- **GD-2 (SHOULD NOT)** Reference AI tools in commit messages; focus on the change itself.
-- **GD-3 (MUST)** Use feature branches for all changes before merging to main.
-- **GD-4 (SHOULD)** Include manual testing verification before merging.
-
----
-
-## 14 — AI Code Verification & Acceptance
+## 13 — AI Code Verification & Acceptance
 
 This section formalizes the verification process every AI-generated component must pass.
 
@@ -289,9 +237,7 @@ Before accepting AI-generated code, a human reviewer must:
 6. ✅ Run Lighthouse audit
 7. ✅ Make decision: Accept / Regenerate / Refactor
 
----
-
-## 15 — Project-Specific Guidelines
+## 14 — Project-Specific Guidelines
 
 ### Design System
 
@@ -317,9 +263,7 @@ Before accepting AI-generated code, a human reviewer must:
 - Add features/complexity at tablet (768px) and desktop (1024px+) breakpoints
 - Test touch interactions on actual devices
 
----
-
-## 16 — Productivity Shortcuts
+## 15 — Productivity Shortcuts
 
 ### XFRESH
 
@@ -378,9 +322,7 @@ Create a comprehensive testing checklist:
 Sort by user impact.
 ```
 
----
-
-## 17 — The Human-in-the-Loop Philosophy
+## 16 — The Human-in-the-Loop Philosophy
 
 These guidelines exist to enable **efficient AI-assisted development without sacrificing code quality**.
 

@@ -1,17 +1,12 @@
-import { animate, stagger } from 'animejs';
+import { createTimeline, stagger } from 'animejs';
 
-const COIN_PARTS = [
+const SVG_BACKGROUND_IDS = ['TALL-COIN-PILE-', 'MEDIUM-COIN-PILE', 'BILLS'];
+const SVG_FOREGROUND_IDS = [
   'HUGE-COIN',
   'HOLD-COIN',
   'SMALL-COINS-PILE',
-  'TALL-COIN-PILE-',
-  'MEDIUM-COIN-PILE',
   'LITTLE-COIN-PILE',
 ];
-
-const MAX_MOUSE_PULL = 18;
-const BASE_COIN_SCALE = 0.18;
-const COIN_SCALE_STAGGER = 0.025;
 
 export function prefersReducedMotion() {
   return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -28,138 +23,166 @@ export function prepareHeroSvg(raw) {
     });
 }
 
-function initHeroLoad(contentEl) {
-  return animate(contentEl.children, {
+function querySvgPart(illustrationEl, id) {
+  return illustrationEl.querySelector(`[id="${id}"]`);
+}
+
+function querySvgParts(illustrationEl) {
+  const background = SVG_BACKGROUND_IDS.flatMap((id) => {
+    const el = querySvgPart(illustrationEl, id);
+    return el ? [el] : [];
+  });
+
+  const foreground = SVG_FOREGROUND_IDS.flatMap((id) => {
+    const el = querySvgPart(illustrationEl, id);
+    return el ? [el] : [];
+  });
+
+  return {
+    background,
+    greenCharacter: querySvgPart(illustrationEl, 'GREEN-CHARACTER'),
+    orangeCharacter: querySvgPart(illustrationEl, 'ORANGE-CHARACTER'),
+    foreground,
+  };
+}
+
+function createSvgParallaxTimeline(illustrationEl, shapes) {
+  const parts = querySvgParts(illustrationEl);
+  const hasShapes = shapes.length > 0;
+  const hasBackground = parts.background.length > 0;
+  const hasForeground = parts.foreground.length > 0;
+
+  const tl = createTimeline({
+    defaults: { ease: 'outQuart', duration: 600 },
+  });
+
+  if (hasShapes) {
+    tl.add(
+      shapes,
+      {
+        opacity: [0, 0.55],
+        scale: [0.88, 1],
+        duration: 700,
+        delay: stagger(120),
+      },
+      0,
+    );
+  }
+
+  if (hasBackground) {
+    tl.add(
+      parts.background,
+      {
+        opacity: [0, 1],
+        scale: [0.92, 1],
+        duration: 650,
+        delay: stagger(90),
+      },
+      hasShapes ? '+=80' : 0,
+    );
+  }
+
+  const characterStart = hasBackground || hasShapes ? '+=100' : 0;
+
+  if (parts.greenCharacter) {
+    tl.add(
+      parts.greenCharacter,
+      {
+        opacity: [0, 1],
+        translateX: [-48, 0],
+        translateY: [28, 0],
+        duration: 700,
+      },
+      characterStart,
+    );
+  }
+
+  if (parts.orangeCharacter) {
+    tl.add(
+      parts.orangeCharacter,
+      {
+        opacity: [0, 1],
+        translateX: [48, 0],
+        translateY: [28, 0],
+        duration: 700,
+      },
+      parts.greenCharacter ? '<+=100' : characterStart,
+    );
+  }
+
+  if (hasForeground) {
+    const leftForeground = parts.foreground.filter((el) =>
+      el.id === 'HOLD-COIN' || el.id === 'SMALL-COINS-PILE',
+    );
+    const rightForeground = parts.foreground.filter((el) =>
+      el.id === 'HUGE-COIN' || el.id === 'LITTLE-COIN-PILE',
+    );
+
+    if (leftForeground.length) {
+      tl.add(
+        leftForeground,
+        {
+          opacity: [0, 1],
+          translateY: [20, 0],
+          translateX: [-14, 0],
+          duration: 550,
+          delay: stagger(100),
+        },
+        '+=120',
+      );
+    }
+
+    if (rightForeground.length) {
+      tl.add(
+        rightForeground,
+        {
+          opacity: [0, 1],
+          translateY: [20, 0],
+          translateX: [14, 0],
+          duration: 550,
+          delay: stagger(100),
+        },
+        leftForeground.length ? '<' : '+=120',
+      );
+    }
+  }
+
+  return tl;
+}
+
+export function initHeroAnimations({ contentEl, illustrationEl, backgroundEl }) {
+  if (!contentEl) return () => {};
+
+  const shapes = backgroundEl?.querySelectorAll('.hero__shape') ?? [];
+
+  if (prefersReducedMotion()) return () => {};
+
+  const masterTl = createTimeline({
+    defaults: { ease: 'outQuart' },
+  });
+
+  masterTl.add(contentEl.children, {
     translateY: [40, 0],
     opacity: [0, 1],
     duration: 500,
     delay: stagger(100),
-    ease: 'outQuart',
-  });
-}
-
-function initIllustrationEntrance(illustrationEl) {
-  return animate(illustrationEl, {
-    opacity: [0, 1],
-    scale: [0.94, 1],
-    duration: 700,
-    delay: 200,
-    ease: 'outQuart',
-  });
-}
-
-function initIllustrationMouseFollow(visualEl) {
-  const target = visualEl.querySelector('.hero__illustration-rotator');
-  if (!target) return () => {};
-
-  const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-  if (!canHover) return () => {};
-
-  let rafId = null;
-  let pullX = 0;
-  let pullY = 0;
-
-  const applyTransform = () => {
-    rafId = null;
-    target.style.transform = `translate(${pullX}px, ${pullY}px)`;
-  };
-
-  const onMouseMove = (event) => {
-    const rect = visualEl.getBoundingClientRect();
-    const relativeX = (event.clientX - rect.left) / rect.width - 0.5;
-    const relativeY = (event.clientY - rect.top) / rect.height - 0.5;
-
-    pullX = relativeX * MAX_MOUSE_PULL * 2;
-    pullY = relativeY * MAX_MOUSE_PULL * 2;
-
-    if (!rafId) {
-      rafId = requestAnimationFrame(applyTransform);
-    }
-  };
-
-  const onMouseLeave = () => {
-    pullX = 0;
-    pullY = 0;
-    if (!rafId) {
-      rafId = requestAnimationFrame(applyTransform);
-    }
-  };
-
-  visualEl.addEventListener('mousemove', onMouseMove);
-  visualEl.addEventListener('mouseleave', onMouseLeave);
-
-  return () => {
-    visualEl.removeEventListener('mousemove', onMouseMove);
-    visualEl.removeEventListener('mouseleave', onMouseLeave);
-    if (rafId) cancelAnimationFrame(rafId);
-    target.style.transform = '';
-  };
-}
-
-function getHeroScrollProgress(heroEl) {
-  const rect = heroEl.getBoundingClientRect();
-  const scrolled = Math.max(-rect.top, 0);
-  const range = rect.height * 0.9;
-  return Math.min(scrolled / range, 1);
-}
-
-function initCoinScrollScale(illustrationEl, heroEl) {
-  const coins = COIN_PARTS.flatMap((id) => {
-    const el = illustrationEl.querySelector(`[id="${id}"]`);
-    return el ? [el] : [];
   });
 
-  if (!coins.length || !heroEl) return () => {};
+  if (illustrationEl) {
+    const svgTl = createSvgParallaxTimeline(illustrationEl, shapes);
+    masterTl.sync(svgTl, '+=150');
+  } else if (shapes.length) {
+    masterTl.add(
+      shapes,
+      {
+        opacity: [0, 0.55],
+        scale: [0.88, 1],
+        duration: 700,
+        delay: stagger(120),
+      },
+      '+=150',
+    );
+  }
 
-  let active = true;
-
-  const visibilityObserver = new IntersectionObserver(
-    ([entry]) => {
-      active = entry.isIntersecting;
-    },
-    { threshold: 0 },
-  );
-  visibilityObserver.observe(heroEl);
-
-  const onScroll = () => {
-    if (!active) return;
-
-    const progress = getHeroScrollProgress(heroEl);
-
-    coins.forEach((coin, index) => {
-      const scale = 1 + progress * (BASE_COIN_SCALE + index * COIN_SCALE_STAGGER);
-      coin.style.transform = `scale(${scale})`;
-      coin.style.transformBox = 'fill-box';
-      coin.style.transformOrigin = 'center';
-    });
-  };
-
-  onScroll();
-  window.addEventListener('scroll', onScroll, { passive: true });
-
-  return () => {
-    visibilityObserver.disconnect();
-    window.removeEventListener('scroll', onScroll);
-    coins.forEach((coin) => {
-      coin.style.transform = '';
-      coin.style.transformBox = '';
-      coin.style.transformOrigin = '';
-    });
-  };
-}
-
-export function initHeroAnimations({ contentEl, visualEl, illustrationEl, heroEl }) {
-  if (prefersReducedMotion() || !contentEl || !visualEl) return () => {};
-
-  const loadAnimation = initHeroLoad(contentEl);
-  const entranceAnimation = illustrationEl ? initIllustrationEntrance(illustrationEl) : null;
-  const removeMouseFollow = initIllustrationMouseFollow(visualEl);
-  const removeCoinScale = illustrationEl ? initCoinScrollScale(illustrationEl, heroEl) : () => {};
-
-  return () => {
-    loadAnimation.pause();
-    entranceAnimation?.pause();
-    removeMouseFollow();
-    removeCoinScale();
-  };
+  return () => masterTl.pause();
 }

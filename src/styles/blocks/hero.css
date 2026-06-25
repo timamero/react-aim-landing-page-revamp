@@ -18,7 +18,7 @@
 .hero__shape {
   position: absolute;
   border-radius: 50%;
-  opacity: 0.55;
+  opacity: 0;
 }
 
 .hero__shape--1 {
@@ -115,12 +115,10 @@
 
 .hero__illustration-rotator {
   transform-origin: center center;
-  will-change: transform;
-  transition: transform 180ms ease-out;
 }
 
 .hero__illustration-inner {
-  opacity: 0;
+  display: block;
 }
 
 .hero__illustration-svg {
@@ -130,16 +128,18 @@
   overflow: hidden;
 }
 
-.hero__illustration-svg [id="HUGE-COIN"],
-.hero__illustration-svg [id="HOLD-COIN"],
-.hero__illustration-svg [id="SMALL-COINS-PILE"],
-.hero__illustration-svg [id="TALL-COIN-PILE-"],
-.hero__illustration-svg [id="MEDIUM-COIN-PILE"],
-.hero__illustration-svg [id="LITTLE-COIN-PILE"] {
+.hero__illustration-svg [id='TALL-COIN-PILE-'],
+.hero__illustration-svg [id='MEDIUM-COIN-PILE'],
+.hero__illustration-svg [id='BILLS'],
+.hero__illustration-svg [id='GREEN-CHARACTER'],
+.hero__illustration-svg [id='ORANGE-CHARACTER'],
+.hero__illustration-svg [id='HUGE-COIN'],
+.hero__illustration-svg [id='HOLD-COIN'],
+.hero__illustration-svg [id='SMALL-COINS-PILE'],
+.hero__illustration-svg [id='LITTLE-COIN-PILE'] {
   transform-box: fill-box;
   transform-origin: center;
-  will-change: transform;
-  transition: transform 120ms linear;
+  opacity: 0;
 }
 
 @media (min-width: 768px) {
@@ -182,22 +182,20 @@
     transform: none;
   }
 
-  .hero__illustration-inner {
+  .hero__shape {
+    opacity: 0.55;
+  }
+
+  .hero__illustration-svg [id='TALL-COIN-PILE-'],
+  .hero__illustration-svg [id='MEDIUM-COIN-PILE'],
+  .hero__illustration-svg [id='BILLS'],
+  .hero__illustration-svg [id='GREEN-CHARACTER'],
+  .hero__illustration-svg [id='ORANGE-CHARACTER'],
+  .hero__illustration-svg [id='HUGE-COIN'],
+  .hero__illustration-svg [id='HOLD-COIN'],
+  .hero__illustration-svg [id='SMALL-COINS-PILE'],
+  .hero__illustration-svg [id='LITTLE-COIN-PILE'] {
     opacity: 1;
-  }
-
-  .hero__illustration-rotator {
-    transform: none !important;
-    transition: none;
-  }
-
-  .hero__illustration-svg [id="HUGE-COIN"],
-  .hero__illustration-svg [id="HOLD-COIN"],
-  .hero__illustration-svg [id="SMALL-COINS-PILE"],
-  .hero__illustration-svg [id="TALL-COIN-PILE-"],
-  .hero__illustration-svg [id="MEDIUM-COIN-PILE"],
-  .hero__illustration-svg [id="LITTLE-COIN-PILE"] {
-    transform: none !important;
-    transition: none;
+    transform: none;
   }
 }

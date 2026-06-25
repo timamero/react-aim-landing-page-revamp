@@ -6,17 +6,15 @@ import { initHeroAnimations, prepareHeroSvg } from "../../utils/heroAnimations";
 const heroSvgMarkup = prepareHeroSvg(heroSvgRaw);
 
 function HeroSection() {
-  const heroRef = useRef(null);
   const contentRef = useRef(null);
-  const visualRef = useRef(null);
   const illustrationRef = useRef(null);
+  const backgroundRef = useRef(null);
 
   useEffect(() => {
     return initHeroAnimations({
       contentEl: contentRef.current,
-      visualEl: visualRef.current,
       illustrationEl: illustrationRef.current,
-      heroEl: heroRef.current,
+      backgroundEl: backgroundRef.current,
     });
   }, []);
 
@@ -24,10 +22,9 @@ function HeroSection() {
     <section
       id="hero"
       className="hero"
-      ref={heroRef}
       aria-labelledby="hero-heading"
     >
-      <div className="hero__background" aria-hidden="true">
+      <div className="hero__background" ref={backgroundRef} aria-hidden="true">
         <div className="hero__shape hero__shape--1" />
         <div className="hero__shape hero__shape--2" />
         <div className="hero__shape hero__shape--3" />
@@ -52,7 +49,7 @@ function HeroSection() {
           </div>
         </div>
 
-        <div className="hero__visual" ref={visualRef} aria-hidden="true">
+        <div className="hero__visual" aria-hidden="true">
           <div className="hero__illustration">
             <div className="hero__illustration-rotator">
               <div

@@ -5,6 +5,7 @@ import './styles/globals.css';
 import './styles/animations.css';
 import './styles/blocks/button.css';
 import './styles/blocks/header.css';
+import './styles/blocks/hero.css';
 import App from './App.jsx';
 
 createRoot(document.getElementById('root')).render(
